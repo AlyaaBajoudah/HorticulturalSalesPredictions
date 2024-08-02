@@ -12,12 +12,21 @@ def add_date_based_features(dataset: pd.DataFrame):
     dataset['cal_date_weekday'] = dataset.index.weekday
     dataset['cal_date_month'] = dataset.index.month
     dataset['cal_date_quarter'] = dataset.index.quarter
-    for index in dataset.index.date:
+    for index in dataset.index:
+        #ras = i.weekday()
+        #bal = dataset.loc[index, 'public_holiday']
         if index.weekday() == 6 or dataset.loc[index, 'public_holiday'] != 'no':
-            dataset.at[index, 'cal_date_workingday'] = False
+            dataset.loc[index, 'cal_date_workingday'] = False
         else:
-            dataset.at[index, 'cal_date_workingday'] = True
-    dataset['cal_date_workingday'] = dataset['cal_date_workingday'].astype(dtype='bool')
+            dataset.loc[index, 'cal_date_workingday'] = True
+
+    
+    #for index in dataset.index.date:
+    #    if index.weekday() == 6 or dataset.loc[index, 'public_holiday'] != 'no':
+    #        dataset.at[index, 'cal_date_workingday'] = False
+    #    else:
+    #        dataset.at[index, 'cal_date_workingday'] = True
+    #dataset['cal_date_workingday'] = dataset['cal_date_workingday'].astype(dtype='bool')
 
 
 def add_valentine_mothersday(dataset: pd.DataFrame):
