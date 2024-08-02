@@ -34,13 +34,25 @@ def add_valentine_mothersday(dataset: pd.DataFrame):
     Function adding valentine's and mother's day to public_holiday column of dataset
     :param dataset: dataset for adding valentine's and mother's day
     """
+   for index in dataset.index:
+      if index.day == 14 and index.month == 2:
+        dataset.loc[index, 'public_holiday'] = 'Valentine'
+        
+
     # add valentine's day (always 14th of February)
-    dataset.at[[index for index in dataset.index.date if (index.day == 14 and index.month == 2)],
-               'public_holiday'] = 'Valentine'
+    #dataset.at[[index for index in dataset.index.date if (index.day == 14 and index.month == 2)],
+    #          'public_holiday'] = 'Valentine'
+
+for index in dataset.index:
+      if (index.day-7) > 0 and index.day < 15 and index.weekday() == 6 and index.month == 5:
+        dataset.loc[index, 'public_holiday'] = 'MothersDay'
+    
+
+
     # add mother's day (in Germany always second sunday in May)
-    dataset.at[[index for index in dataset.index.date
-                if ((index.day-7) > 0 and index.day < 15 and index.weekday() == 6 and index.month == 5)],
-               'public_holiday'] = 'MothersDay'
+    #dataset.at[[index for index in dataset.index.date
+    #            if ((index.day-7) > 0 and index.day < 15 and index.weekday() == 6 and index.month == #5)],
+     #          'public_holiday'] = 'MothersDay'
 
 
 def add_public_holiday_counters(dataset: pd.DataFrame, event_lags: list, special_days: list):
