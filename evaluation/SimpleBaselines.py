@@ -41,7 +41,7 @@ class RandomWalk(SimpleBaseline):
         else:
             shift_param = 1
         # shift and fillna (values before shift_param is reached) with dummy value
-        ds_shifted = train.append(test)[target_column].shift(shift_param).fillna(-9999)
+        ds_shifted = train._append(test)[target_column].shift(shift_param).fillna(-9999)
         insample = pd.DataFrame(ds_shifted[train.index].values, index=train.index, columns=['Insample'])
         if self.one_step_ahead:
             prediction = pd.DataFrame(ds_shifted[test.index].values, index=test.index, columns=['Prediction'])
