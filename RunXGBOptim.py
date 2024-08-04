@@ -125,7 +125,7 @@ def run_xgb_optim(target_column: str, split_perc: float, imputation: str, featur
             save_dict.update(evaluation_dict)
             if doc_results is None:
                 doc_results = pd.DataFrame(columns=save_dict.keys())
-            doc_results = doc_results.append(save_dict, ignore_index=True)
+            doc_results = doc_results._append(save_dict, ignore_index=True)
             best_rmse, best_mape, best_smape = TrainHelper.print_best_vals(evaluation_dict=evaluation_dict,
                                                                            best_rmse=best_rmse, best_mape=best_mape,
                                                                            best_smape=best_smape, run_number=i)

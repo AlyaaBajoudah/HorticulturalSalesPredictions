@@ -62,7 +62,7 @@ class XGBoostRegression(ModelsBaseClass.BaseModel):
         :param train: train set
         :return: DataFrame with insample predictions
         """
-        insample = pd.DataFrame(data=self.model.predict(data=train.drop([self.target_column], axis=1)),
+        insample = pd.DataFrame(self.model.predict(data=train.drop([self.target_column], axis=1)),
                                 index=train.index, columns=['Insample'])
         return insample
 
@@ -79,8 +79,8 @@ class XGBoostRegression(ModelsBaseClass.BaseModel):
             # deep copy model as predict function should not change class model
             model = copy.deepcopy(self.model)
             for i in range(0, test.shape[0]):
-                fc = model.predict(data=test.drop([self.target_column], axis=1).iloc[[i]])
-                train_manip = train_manip.append(test.iloc[[i]])
+                fc = model.predict(test.drop([self.target_column], axis=1).iloc[[i]])
+                train_manip = train_manip._append(test.iloc[[i]])
                 model = self.update(train=train_manip, model=model)
                 predict_lst.append(fc)
             predict = np.array(predict_lst).flatten()
